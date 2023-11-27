@@ -1,0 +1,1 @@
+"""Test rating system logic."""
