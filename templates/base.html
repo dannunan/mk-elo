@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %} - MK Elo</title>
+    {% endblock %}
+</head>
+
+<body>
+    <nav>
+        <h1>MK-Elo</h1>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('submit') }}">Submit Result</a></li>
+        </ul>
+    </nav>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        Contribute on <a href="https://github.com/dannunan/mk-elo">GitHub</a>.
+        {% endblock %}
+    </div>
+</body>
+
+</html>

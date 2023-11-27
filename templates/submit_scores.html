@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Submit{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <h3>Submit Result</h3>
+    <p>Enter player names and scores</p>
+    {% for i in range(3) %}
+    <label for="player">Player</label>
+    <input name="player" id="player" required>
+    <label for="score">Score</label>
+    <input name="score" id="score" required>
+    <br>
+    {% endfor %}
+    <br>
+    <input type="submit" value="Register">
+</form>
+{% endblock %}
