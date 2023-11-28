@@ -29,11 +29,17 @@ def login():
         if error is None:
             session.clear()
             session["username"] = username
-            return redirect(url_for("home"))
+            return redirect(url_for("submit"))
 
         flash(error)
 
     return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
 
 
 @app.route("/submit", methods=["GET", "POST"])
