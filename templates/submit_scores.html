@@ -8,7 +8,7 @@
 <form method="post">
     <h3>Submit Result</h3>
     <p>Enter player names and scores</p>
-    {% for i in range(3) %}
+    {% for i in range(session["n_players"]) %}
     <label for="player">Player</label>
     <input name="player" id="player" required>
     <label for="score">Score</label>
@@ -16,6 +16,8 @@
     <br>
     {% endfor %}
     <br>
-    <input type="submit" value="Register">
+    <input type="submit" value="Submit">
+    <br>
+    <br>
 </form>
 {% endblock %}
