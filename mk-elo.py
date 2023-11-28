@@ -40,5 +40,38 @@ def estimate_point_share(ratings: np.ndarray, n=1000) -> np.ndarray:
     return POINTS[placement].mean(axis=0) / TOTAL
 
 
+def calculate_adjustments(expected_point_share, point_share) -> np.ndarray:
+    """Return changes to player ratings based on difference between
+    expected and observed `point_share`."""
+    return 250 * (point_share - expected_point_share)
+
+
 if __name__ == "__main__":
-    print(TOTAL * estimate_point_share(np.array([2000, 1500, 1000, 500]), 1000))
+    # Test skill rating convergence with some example players
+    true_ratings = np.array([1500, 1250, 1100, 800] + [1000] * 8)
+    ratings = [np.array([1000] * 12)]
+
+    for gp in range(25):
+        # Emulate gp with `length` races
+        length = np.random.choice([4, 6, 8, 12])
+        placement = (
+            np.random.default_rng()
+            .normal(loc=true_ratings, scale=RATING_VAR, size=(length, 12))
+            .argsort(axis=1, kind="mergesort")
+            .argsort(axis=1, kind="mergesort")
+        )
+        share = POINTS[placement].sum(axis=0) / (TOTAL * length)
+        expected_share = estimate_point_share(ratings[-1], 1000)
+        adjustment = calculate_adjustments(expected_share, share)
+        ratings.append(ratings[-1] + (length * adjustment))
+
+    import matplotlib.pyplot as plt
+
+    ax = plt.subplot()
+    ax.plot(np.array(ratings)[:, :4], label=true_ratings[:4])
+    ax.set_title("Convergence to true rating")
+    ax.legend(loc="upper right")
+    ax.set_ylim([0, 2000])
+    ax.set_xlabel("GP number")
+    ax.set_ylabel("Rating")
+    plt.savefig("static/test")
