@@ -10,9 +10,9 @@
     <p>Enter player names and scores</p>
     {% for i in range(session["n_players"]) %}
     <label for="player">Player</label>
-    <input name="player" id="player" required>
+    <input name="player" id="player" required size="8">
     <label for="score">Score</label>
-    <input name="score" id="score" required>
+    <input name="score" id="score" required size="1">
     <br>
     {% endfor %}
     <br>
