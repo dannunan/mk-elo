@@ -29,6 +29,7 @@ def login():
         if error is None:
             session.clear()
             session["username"] = username
+            app.logger.info("%s logged in", username)
             return redirect(url_for("submit"))
 
         flash(error)
@@ -53,10 +54,19 @@ def submit():
     return render_template("submit.html")
 
 
-@app.route("/submit_scores")
+@app.route("/submit_scores", methods=["GET", "POST"])
 def submit_scores():
     if "username" not in session:
         return redirect("login")
     if "n_players" not in session:
         return redirect("submit")
+    if request.method == "POST":
+        # TODO get for variable number of players
+        player = request.form["player"]
+        score = int(request.form["score"])
+
+        app.logger.info("Submitted result for %s", player)
+
+        # TODO: update db and trigger rating adjustment
+        return redirect("/")
     return render_template("submit_scores.html")
